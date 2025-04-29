@@ -1,19 +1,15 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-# Log to /workspace/comfyui_install.log (assuming /workspace is mounted)
 mkdir -p /workspace
 exec > >(tee -a /workspace/comfyui_install.log) 2>&1
 
 echo "=== Starting ComfyUI Installation ==="
 date
 
-echo "=== Ensuring /workspace directory exists and moving there ==="
 cd /workspace
 
-# Remove old ComfyUI if you want a fresh install each time
 if [ -d "ComfyUI" ]; then
-    echo "Removing existing ComfyUI folder..."
     rm -rf ComfyUI
 fi
 
@@ -50,4 +46,4 @@ pip freeze | grep -E 'torch|comfyui|pillow|numpy|py|manager|ltdr' || true
 echo "=== Freeing port 3001 ==="
 fuser -k 3001/tcp || true
 
-echo "=== Done installing. ComfyUI can now be run. ==="
+echo "=== Done installing. Now the Docker CMD will launch Jupyter & ComfyUI. ==="
